@@ -6,7 +6,7 @@ export default function TitleScreen(props){
         <div className="title-wrapper">
             <h1>Quiz Game</h1>
             <p>Please select one:</p>
-            <button>Play</button>
+            <button onClick={props.quickGame}>Quick Game</button>
         </div>
 
 
