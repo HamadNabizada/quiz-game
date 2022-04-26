@@ -10,7 +10,7 @@ html{
     /* font-family: 'Karla', sans-serif; */
 }
 .quiz-wrapper{
-    height: 100vh;
+    min-height: 100vh;
     background-color: #F5F7FB;
     display:flex;
     flex-direction: column;
@@ -18,12 +18,12 @@ html{
     align-items: center;
 }
 .background{
-    height: 100vh;
     background-image: url('../public/images/blob-yellow.svg'), url('../public/images/blob-blue.svg');
     background-repeat: no-repeat, no-repeat;
     background-size:auto, auto;
     background-position-x: right, left;
     background-position-y: top, bottom;
+    background-attachment:fixed;
 }
 .title-wrapper{
     margin-top:15rem;
@@ -38,9 +38,7 @@ html{
     font-weight: 700;
     font-size: 4rem;
 }
-.title-wrapper>p{
 
-}
 .title-wrapper>button{
     width: 100%;
     height:3rem;
@@ -50,11 +48,58 @@ html{
     background-color: #293264;
     color:white;
 }
-button:hover{
+.title-wrapper>button:hover{
     background-color: #4452a3;
     color:white;
 }
-button:active{
+.title-wrapper>button:active{
     background-color: #293264;
     color:white;
+}
+.questions-wrapper{
+    width: 50rem;
+    margin-top: 3rem;
+    gap: 1rem;
+    display:flex;
+    flex-direction: column;
+}
+.questions-wrapper > h1{
+    font-family: 'Karla', 'sans-serif';
+    font-weight: 700;
+    color: #293264;
+    font-size: 1.2rem;
+}
+.selection-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+.selection{
+    font-family: 'Inter', 'sans-serif';
+    font-weight: 500;
+    color:#293264;
+    padding: .1rem .5rem;
+    background-color: white;
+    border: .09rem solid #4D5B9E;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size:1rem;
+}
+.selection:hover{
+    background-color: #D6DBF5;
+    color:#293264;
+    border-color: #D6DBF5;
+}
+.selection:active{
+    background-color: #bbc0d6;
+    color:#293264;
+}
+.currentSelection{
+    background-color: #D6DBF5;
+    color:#293264;
+    border-color: #D6DBF5;
+}
+.divider{
+    border-bottom:.1rem solid #DBDEF0;
 }

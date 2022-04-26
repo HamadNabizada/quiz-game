@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import TitleScreen from './TitleScreen'
 import Questions from './Questions'
-
+import { nanoid } from 'nanoid'
 
 export default function QuizGame(){
     let [onTitleScreen, setOnTitleScreen] = useState(true)
@@ -24,6 +24,8 @@ export default function QuizGame(){
         setQuestionsElement(questionsArray.map( item =>{
             return (
             <Questions 
+                key={item.id}
+                id={item.id}
                 type={item.type}
                 question={item.question}
                 incorrect={item.incorrect}
@@ -35,6 +37,7 @@ export default function QuizGame(){
     function createQuestionsArray(array){
         let myQuestionsArray = array.map((item)=>{
             return {
+                id: nanoid(),
                 type: item.type,
                 question: item.question,
                 incorrect: item.incorrect_answers,
