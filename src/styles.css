@@ -58,10 +58,15 @@ html{
 }
 .questions-wrapper{
     width: 50rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
     gap: 1rem;
     display:flex;
     flex-direction: column;
+    margin-bottom:2rem;
+    border: .1px solid #293264;
+    border-radius: 7px;
+    padding: 1rem;
+
 }
 .questions-wrapper > h1{
     font-family: 'Karla', 'sans-serif';
@@ -70,6 +75,7 @@ html{
     font-size: 1.2rem;
 }
 .selection-wrapper{
+    margin-top: 1rem;
     display:flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -78,8 +84,9 @@ html{
 .selection{
     font-family: 'Inter', 'sans-serif';
     font-weight: 500;
-    min-width: 5rem;
+    min-width: 7rem;
     max-width: 10rem;
+    min-height:3rem;
     color:#293264;
     padding: .1rem .5rem;
     background-color: white;
@@ -103,5 +110,6 @@ html{
     border-color: #D6DBF5;
 }
 .divider{
+    display:none;
     border-bottom:.1rem solid #DBDEF0;
 }

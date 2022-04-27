@@ -9,8 +9,15 @@ export default function Questions(props){
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
         return finalQuestion
     }
-    
+    let shuffledElements=[]
     let possibleAnswers = [...props.incorrect, props.correct]
+    console.log(possibleAnswers);
+    possibleAnswers.sort()
+    if(possibleAnswers[0] === 'False'){
+        possibleAnswers[0] = 'True'
+        possibleAnswers[1] = 'False'
+    }
+    console.log(possibleAnswers);
     let answersElement = possibleAnswers.map(answer => {
         let id = nanoid()
         return (
@@ -21,8 +28,12 @@ export default function Questions(props){
             answer={replaceWithSymbol(answer)}
         />)
     });
+    function sayAnswer(){
+        console.log(props.correct);
+    }
+
     return(
-        <div className="questions-wrapper">
+        <div onClick={sayAnswer} className="questions-wrapper">
             <h1>{replaceWithSymbol(props.question)}</h1>
             <div className="selection-wrapper">
                 {answersElement}
