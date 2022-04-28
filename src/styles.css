@@ -139,7 +139,7 @@ html{
     max-width:6rem;
 
 }
-.settings>select, .settings>input{
+.settings>select, .amountInput{
     outline: none;
     border: none;
     background-color: #293264;
@@ -152,4 +152,16 @@ html{
     border-radius: 3px;
     text-indent:.3rem;
 }
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-wrapper{
+    display:flex;
+    flex-direction: column;
+}
+.input-wrapper>span{
+    font-style: italic;
+    font-size:.6rem;
+}

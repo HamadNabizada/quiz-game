@@ -9,14 +9,53 @@ export default function QuizGame(){
     let [questionsData, setQuestionsData] = useState([])
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
     let [questionsElement, setQuestionsElement] = useState([])
-
-
+    let [UrlObject, setUrlObject] = useState({
+        amount: '10',
+        category: '',
+        difficulty: '',
+        type: ''
+    })
+    function UrlValuesToURL(){
+        console.log(UrlObject);
+    }
     function showGame(){
         setOnTitleScreen(prevOnTitleScreen => !prevOnTitleScreen)
         setQuickGame(true)
     }
-
-  
+    function handleChange(event){
+        setUrlObject(prevUrlObject =>{
+            return {
+                ...prevUrlObject,
+                [event.target.name]:event.target.value
+            }
+        })
+    }
+    function setCorrectAmount(amount){
+        if(amount>50){
+            return '50'
+        }
+        if(amount<1){
+            return '1'
+        }
+        else{
+            return amount
+        }
+    }
+    function createCustomizedGame(){
+        //updateURL
+        let UrlString = 'https://opentdb.com/api.php?'
+        let UrlAmount = setCorrectAmount(UrlObject.amount)
+        let UrlStringAmount = `${UrlString}${UrlAmount}`
+        let UrlCategory = UrlObject.category && `&category=${UrlObject.category}`
+        let UrlDifficulty = UrlObject.difficulty && `&difficulty=${UrlObject.difficulty}`
+        let UrlType = UrlObject.type && `&type=${UrlObject.type}`
+        let totalUrl = UrlStringAmount + UrlCategory + UrlDifficulty + UrlType
+        console.log(totalUrl)
+        
+        // playQuickGame()
+        //^^^ uncomment to play the game
+    }
+    
     function playQuickGame(){
         console.log('Quick Game Started');
         let questionsArray = createQuestionsArray(questionsData)
@@ -58,8 +97,13 @@ export default function QuizGame(){
 
     return (
         <div className='background quiz-wrapper'>
-            {onTitleScreen && <TitleScreen quickGame={playQuickGame}/>}
+            {onTitleScreen && <TitleScreen 
+                handleChange={handleChange} 
+                Url={UrlValuesToURL} 
+                quickGame={playQuickGame}
+                />}
             {(!onTitleScreen && quickGame) && questionsElement}
+            <button onClick={createCustomizedGame} >TEST</button>
         </div>
     )
 }

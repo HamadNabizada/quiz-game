@@ -8,14 +8,17 @@ export default function TitleScreen(props){
             <p>Please select one:</p>
             <button onClick={props.quickGame}>Quick Game</button>
             <form className="form">
-                <button className="customBtn">Custom Quiz</button>
+                <button onClick={props.Url} type='button' className="customBtn">Custom Quiz</button>
                 <div className="settings">
                     <label htmlFor="numOfQuestions">Number of Questions:</label>
-                    <input type="text" defaultValue='10' name='amount'/>
+                    <div className='input-wrapper'>
+                        <input className='amountInput' onChange={props.handleChange} onClick={(event) => event.target.select()} max='50' min='0' type="number" defaultValue='10' name='amount'/>
+                        <span>Maximum: 50 Minimum: 1</span>
+                    </div>
                 </div>
                 <div className="settings">
                     <label htmlFor="category">Category:</label>
-                    <select name="category" id="category">
+                    <select onChange={props.handleChange} name="category" id="category">
                         <option value="">Any Category</option>
                         <option value="9">General Knowledge</option>
                         <option value="10">Entertainment: Books</option>
@@ -45,7 +48,7 @@ export default function TitleScreen(props){
                 </div>
                 <div className="settings">
                     <label htmlFor="difficulty">Difficulty:</label>
-                    <select name="difficulty" id="difficulty">
+                    <select onChange={props.handleChange} name="difficulty" id="difficulty">
                         <option value="">Any Difficulty</option>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
@@ -54,7 +57,7 @@ export default function TitleScreen(props){
                 </div>
                 <div className="settings">
                     <label htmlFor="type">Type:</label>
-                    <select name="type" id="type">
+                    <select onChange={props.handleChange} name="type" id="type">
                         <option value="">Any Type</option>
                         <option value="multiple">Multiple Choice</option>
                         <option value="boolean">True/False</option>

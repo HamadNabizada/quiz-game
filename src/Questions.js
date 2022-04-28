@@ -9,7 +9,7 @@ export default function Questions(props){
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
         return finalQuestion
     }
-    let shuffledElements=[]
+
     let possibleAnswers = [...props.incorrect, props.correct]
     console.log(possibleAnswers);
     possibleAnswers.sort()
