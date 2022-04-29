@@ -108,6 +108,19 @@ html{
     background-color: #bbc0d6;
     color:#293264;
 }
+.userSelected{
+    background-color: #D6DBF5;
+    color:#293264;
+    border-color: #D6DBF5;
+    border: 1px solid blue;
+}
+.userSelected:hover{
+    background-color: #D6DBF5;
+    color:#293264;
+    border-color: #D6DBF5;
+    border: 1px solid blue;
+}
+
 .currentSelection{
     background-color: #D6DBF5;
     color:#293264;

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
+
 
 export default function Selection(props){
 
+    let myClassName=`selection ${props.isSelected === 'yes' && 'userSelected'}`
+    
+
     return(
-        <button className="selection" >{props.answer}</button>
+        <button 
+        id={props.id}
+        onClick={props.handleClick} 
+        className={myClassName} >
+            {props.answer}
+        </button>
     )
 }

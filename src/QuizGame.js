@@ -14,9 +14,6 @@ export default function QuizGame(){
         difficulty: '',
         type: ''
     })
-    function UrlValuesToURL(){
-        console.log(UrlObject);
-    }
     function showGame(){
         setOnTitleScreen(prevOnTitleScreen => !prevOnTitleScreen)
         setQuickGame(true)
@@ -48,7 +45,6 @@ export default function QuizGame(){
         let UrlDifficulty = UrlObject.difficulty && `&difficulty=${UrlObject.difficulty}`
         let UrlType = UrlObject.type && `&type=${UrlObject.type}`
         let totalUrl = UrlStringAmount + UrlCategory + UrlDifficulty + UrlType
-        console.log(totalUrl)
         setUrl(totalUrl)
         showGame()
     }
@@ -65,10 +61,8 @@ export default function QuizGame(){
             />
         )
     })
-    console.log(currentQuestionsArray);
 
     function playQuickGame(){
-        // console.log('Quick Game Started');
         showGame()
     }
     function createQuestionsArray(array){
@@ -97,7 +91,6 @@ export default function QuizGame(){
         <div className='background quiz-wrapper'>
             {onTitleScreen && <TitleScreen 
                 handleChange={handleChange} 
-                Url={UrlValuesToURL} 
                 quickGame={playQuickGame}
                 handleClick={createCustomizedGame}
                 />}
