@@ -23,11 +23,12 @@ export default function Questions(props){
     useEffect(() =>{
         setAnswersElement(possibleAnswers.map(answer => {
                 let id = nanoid()
+                let isSelected=false
                 return (
                 <Selection 
                     key={id}
                     id= {id}
-                    // isSelected=
+                    isSelected={isSelected}
                     handleClick={selectChoice}
                     correct={replaceWithSymbol(props.correct)}
                     answer={replaceWithSymbol(answer)}
