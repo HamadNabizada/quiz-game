@@ -8,7 +8,6 @@ export default function QuizGame(){
     let [quickGame, setQuickGame] = useState(false)
     let [questionsData, setQuestionsData] = useState([])
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
-    let [questionsElement, setQuestionsElement] = useState([])
     let [UrlObject, setUrlObject] = useState({
         amount: '10',
         category: '',
@@ -42,26 +41,20 @@ export default function QuizGame(){
         }
     }
     function createCustomizedGame(){
-        //updateURL
         let UrlString = 'https://opentdb.com/api.php?'
-        let UrlAmount = setCorrectAmount(UrlObject.amount)
+        let UrlAmount = `amount=${setCorrectAmount(UrlObject.amount)}`
         let UrlStringAmount = `${UrlString}${UrlAmount}`
         let UrlCategory = UrlObject.category && `&category=${UrlObject.category}`
         let UrlDifficulty = UrlObject.difficulty && `&difficulty=${UrlObject.difficulty}`
         let UrlType = UrlObject.type && `&type=${UrlObject.type}`
         let totalUrl = UrlStringAmount + UrlCategory + UrlDifficulty + UrlType
         console.log(totalUrl)
-        
-        // playQuickGame()
-        //^^^ uncomment to play the game
+        setUrl(totalUrl)
+        showGame()
     }
-    
-    function playQuickGame(){
-        console.log('Quick Game Started');
-        let questionsArray = createQuestionsArray(questionsData)
-        console.log(questionsArray);
-        setQuestionsElement(questionsArray.map( item =>{
-            return (
+    let currentQuestionsArray = createQuestionsArray(questionsData)
+    let questionsElement = currentQuestionsArray.map( item =>{
+        return (
             <Questions 
                 key={item.id}
                 id={item.id}
@@ -69,8 +62,13 @@ export default function QuizGame(){
                 question={item.question}
                 incorrect={item.incorrect}
                 correct={item.correct}
-            />)
-        }))
+            />
+        )
+    })
+    console.log(currentQuestionsArray);
+
+    function playQuickGame(){
+        // console.log('Quick Game Started');
         showGame()
     }
     function createQuestionsArray(array){
@@ -101,9 +99,9 @@ export default function QuizGame(){
                 handleChange={handleChange} 
                 Url={UrlValuesToURL} 
                 quickGame={playQuickGame}
+                handleClick={createCustomizedGame}
                 />}
             {(!onTitleScreen && quickGame) && questionsElement}
-            <button onClick={createCustomizedGame} >TEST</button>
         </div>
     )
 }

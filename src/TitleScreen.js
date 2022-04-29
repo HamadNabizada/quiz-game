@@ -8,7 +8,7 @@ export default function TitleScreen(props){
             <p>Please select one:</p>
             <button onClick={props.quickGame}>Quick Game</button>
             <form className="form">
-                <button onClick={props.Url} type='button' className="customBtn">Custom Quiz</button>
+                <button onClick={props.handleClick} type='button' className="customBtn">Custom Quiz</button>
                 <div className="settings">
                     <label htmlFor="numOfQuestions">Number of Questions:</label>
                     <div className='input-wrapper'>
