@@ -178,3 +178,8 @@ input::-webkit-inner-spin-button {
     font-style: italic;
     font-size:.6rem;
 }
+.disabled{
+    background-color:#e1e8ec;
+    color: #9eacb6;
+    border-color: #9eacb6;
+}

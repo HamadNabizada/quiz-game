@@ -15,24 +15,66 @@ export default function Questions(props){
         possibleAnswers[0] = 'True'
         possibleAnswers[1] = 'False'
     }
-    let selectionElement = possibleAnswers.map(item =>{
-        let id=nanoid()
-        return <Selection key={id} handleClick={handleClick} correct = {correct} id={id} selection={item}/>
+    let [AnswersArray, setAnswersArray] = useState(createAnswerArray(possibleAnswers))
+    let selectionElement = AnswersArray.map(item =>{
+        return <Selection
+         key={item.id} 
+         id={item.id}
+         name={item.name}
+         handleClick={handleClick} 
+         correct = {item.correct}  
+         isSelected={item.isSelected}
+         isClickable={item.isClickable}
+         />
     })
-    let [questionObject, setQuestionObject] = useState({
-        id: props.id,
-        type: props.type,
-        question: question,
-        incorrect: incorrect,
-        correct: correct
-    })
+    function createAnswerArray(array){
+        let answerArr = possibleAnswers.map(item=>{
+            return { 
+                name: item,
+                id:nanoid(),
+                isSelected:false,
+                isClickable:true,
+                isWrong:false,
+                correct:correct
+            }
+        })
+        return answerArr
+    }
+    // let [questionObject, setQuestionObject] = useState({
+    //     id: props.id,
+    //     type: props.type,
+    //     question: question,
+    //     incorrect: incorrect,
+    //     correct: correct,
+    //     isSelected:false,
+    //     selections: possibleAnswers
+    // })
     function replaceWithSymbol(question){
         let finalQuestion = question.replaceAll('&quot;', '"')
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
         return finalQuestion
     }
     function handleClick(event){
-        // console.log(event.target.id);
+        console.log(event.target.id)
+        let clickedID = event.target.id
+        setAnswersArray(prevAnswersArray =>{
+            return prevAnswersArray.map(item =>{
+                if(item.id === clickedID){
+                    return{
+                        ...item,
+                        isSelected: true,
+                        isClickable: true
+                        
+                    }
+                }else{
+                    return {
+                        ...item,
+                        isClickable: false,
+                        isSelected:false
+                    }
+                }
+            })
+        })
     }
     function sayAnswer(){
         // console.log(questionObject);

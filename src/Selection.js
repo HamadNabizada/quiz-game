@@ -2,18 +2,14 @@ import React, {useState} from 'react'
 
 
 export default function Selection(props){
-    let [isSelected, setIsSelected] = useState(false)
-    let myClassName=`selection ${isSelected ? 'userSelected': ''}`
-    function selectionClicked(event){
-        setIsSelected(prevIsSelected => !prevIsSelected)
-        console.log(event.target.className);
-    }
+    let myClassName=`selection ${props.isClickable ? '':'disabled'} ${props.isSelected ? 'userSelected': ''}`
+
     return(
         <button 
         id={props.id}
-        onClick={selectionClicked} 
+        onClick={props.handleClick} 
         className={myClassName} >
-            {props.selection}
+            {props.name}
         </button>
     )
 }
