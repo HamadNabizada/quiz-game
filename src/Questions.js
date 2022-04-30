@@ -15,7 +15,7 @@ export default function Questions(props){
         possibleAnswers[0] = 'True'
         possibleAnswers[1] = 'False'
     }
-    let [AnswersArray, setAnswersArray] = useState(createAnswerArray(possibleAnswers))
+    let [AnswersArray, setAnswersArray] = useState(createAnswerArray())
     let selectionElement = AnswersArray.map(item =>{
         return <Selection
          key={item.id} 
@@ -25,10 +25,10 @@ export default function Questions(props){
          correct = {item.correct}  
          isSelected={item.isSelected}
          isClickable={item.isClickable}
-         questionID={props.id}
+         questionID={item.id}
          />
     })
-    function createAnswerArray(array){
+    function createAnswerArray(){
         let answerArr = possibleAnswers.map(item=>{
             return { 
                 name: item,
@@ -37,7 +37,8 @@ export default function Questions(props){
                 isClickable:true,
                 isWrong:false,
                 correct:correct,
-                isCorrectAnswer:props.isCorrectAnswer
+                isCorrectAnswer:props.isCorrectAnswer,
+                questionID: props.id
             }
         })
         return answerArr

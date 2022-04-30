@@ -16,6 +16,26 @@ export default function QuizGame(){
         difficulty: '',
         type: ''
     })
+    let [questionObjectArray, setQuestionObjectArray]=useState([{
+        id:'',
+        key:'',
+        question:'',
+        type:'',
+        possibleAnswers:[
+            {
+                selection:'',
+                key:'',
+                id:'',
+                handleClick:'',
+                correct:'',
+                isSelected:'',
+                isClickable:'',
+                isWrong:'',
+                questionID:''
+            }
+        ],
+        isCorrectAnswer: ''
+    }])
     function showGame(){
         setOnTitleScreen(prevOnTitleScreen => !prevOnTitleScreen)
         setQuickGame(true)
@@ -39,6 +59,9 @@ export default function QuizGame(){
             return amount
         }
     }
+    function playQuickGame(){
+        showGame()
+    }
     function createCustomizedGame(){
         let UrlString = 'https://opentdb.com/api.php?'
         let UrlAmount = `amount=${setCorrectAmount(UrlObject.amount)}`
@@ -50,53 +73,64 @@ export default function QuizGame(){
         setUrl(totalUrl)
         showGame()
     }
-    let currentQuestionsArray = createQuestionsArray(questionsData)
-    isCorrectAnswer = currentQuestionsArray.map(item=>{
-        return {
-            isCorrectAnswer: false
-        }
-    })
-    let questionsElement = currentQuestionsArray.map( (item,index) =>{
-        return (
-            <Questions 
-                key={item.id}
-                id={item.id}
-                type={item.type}
-                question={item.question}
-                incorrect={item.incorrect}
-                correct={item.correct}
-                isCorrectAnswer={isCorrectAnswer[index]}
-            />
-        )
-    })
-
-    function playQuickGame(){
-        showGame()
-    }
-    function createQuestionsArray(array){
-        let myQuestionsArray = array.map((item)=>{
-            return {
-                id: nanoid(),
-                type: item.type,
-                question: item.question,
-                incorrect: item.incorrect_answers,
-                correct: item.correct_answer
-            }
-        })
-        return myQuestionsArray
-    }
-
     useEffect(()=>{
         fetch(Url)
             .then(res => res.json())
             .then(data => setQuestionsData(data.results))
     }, [Url])
+    useEffect(()=>{
+        setQuestionObjectArray(questionsData.map(item=>{
+            let id=nanoid()
+            let possibleAnswers = findPossibleAnswers(item.correct_answer, item.incorrect_answers, id)
+            return {
+                id:id,
+                key:id,
+                question:replaceWithSymbol(item.question),
+                type:item.type,
+                possibleAnswers: possibleAnswers,
+                isCorrectAnswer: false
+            }
+        }))
+    },[questionsData])
+
+    function findPossibleAnswers(correct, incorrect, questionId){
+        let allAnswers = [correct, ...incorrect]
+        allAnswers.sort()
+        return allAnswers.map(item=>{
+            let selectionId=nanoid()
+            return {
+                selection:replaceWithSymbol(item),
+                key:selectionId,
+                id:selectionId,
+                handleClick:handleSelectionClick,
+                correct:replaceWithSymbol(correct),
+                isSelected:false,
+                isClickable:true,
+                isWrong:false,
+                questionID:questionId
+            }
+        })
+    }
+    function handleSelectionClick(event){
+        console.log(event.target.id)
+    }
+
 
     function checkButtonClick(){
-        console.log('CheckButtonClicked')
+        console.log('CheckButtonClicked')    
     }
     console.log('Main component reloaded');
-
+    function testButtton(){
+        console.log(questionsData);
+    }
+    function testButtton2(){
+        console.log(questionObjectArray);
+    }
+    function replaceWithSymbol(question){
+        let finalQuestion = question.replaceAll('&quot;', '"')
+        finalQuestion = finalQuestion.replaceAll('&#039;', "'")
+        return finalQuestion
+    }
     return (
         <div className='background quiz-wrapper'>
             {onTitleScreen && <TitleScreen 
@@ -104,7 +138,9 @@ export default function QuizGame(){
                 quickGame={playQuickGame}
                 handleClick={createCustomizedGame}
                 />}
-            {(!onTitleScreen && quickGame) && questionsElement}
+            <button onClick={testButtton} >Log QuestonsData</button>
+            <button onClick={testButtton2} >Log QuestonsobjArr</button>
+            {/* {(!onTitleScreen && quickGame) && questionsElement} */}
             {(!onTitleScreen && quickGame) && <CheckButton handleClick={checkButtonClick} />}
         </div>
     )
@@ -112,3 +148,34 @@ export default function QuizGame(){
 
 //button is clicked
 //is the selection.value === correct? 
+// let questionsElement = currentQuestionsArray.map( (item,index) =>{
+//     return (
+//         <Questions 
+//             key={item.id}
+//             id={item.id}
+//             type={item.type}
+//             question={item.question}
+//             incorrect={item.incorrect}
+//             correct={item.correct}
+//             isCorrectAnswer={isCorrectAnswer[index]}
+//         />
+//     )
+// })
+
+/*
+possibleAnswers=[{
+    selection:select,
+    key:
+    id:
+    name={item.name}
+    handleClick={handleClick} 
+    correct = {item.correct}  
+    isSelected={item.isSelected}
+    isClickable={item.isClickable}
+    questionID={item.id}
+}]
+
+
+
+
+*/
