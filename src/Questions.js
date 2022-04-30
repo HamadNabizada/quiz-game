@@ -25,6 +25,7 @@ export default function Questions(props){
          correct = {item.correct}  
          isSelected={item.isSelected}
          isClickable={item.isClickable}
+         questionID={props.id}
          />
     })
     function createAnswerArray(array){
@@ -35,7 +36,8 @@ export default function Questions(props){
                 isSelected:false,
                 isClickable:true,
                 isWrong:false,
-                correct:correct
+                correct:correct,
+                isCorrectAnswer:props.isCorrectAnswer
             }
         })
         return answerArr

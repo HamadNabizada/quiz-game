@@ -6,6 +6,7 @@ export default function Selection(props){
 
     return(
         <button 
+        data-questionid={props.questionID}
         id={props.id}
         onClick={props.handleClick} 
         className={myClassName} >

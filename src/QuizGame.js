@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import TitleScreen from './TitleScreen'
 import Questions from './Questions'
 import { nanoid } from 'nanoid'
+import CheckButton from './CheckButton'
 
 export default function QuizGame(){
     let [onTitleScreen, setOnTitleScreen] = useState(true)
     let [quickGame, setQuickGame] = useState(false)
     let [questionsData, setQuestionsData] = useState([])
+    let isCorrectAnswer=[]
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
     let [UrlObject, setUrlObject] = useState({
         amount: '10',
@@ -49,7 +51,12 @@ export default function QuizGame(){
         showGame()
     }
     let currentQuestionsArray = createQuestionsArray(questionsData)
-    let questionsElement = currentQuestionsArray.map( item =>{
+    isCorrectAnswer = currentQuestionsArray.map(item=>{
+        return {
+            isCorrectAnswer: false
+        }
+    })
+    let questionsElement = currentQuestionsArray.map( (item,index) =>{
         return (
             <Questions 
                 key={item.id}
@@ -58,6 +65,7 @@ export default function QuizGame(){
                 question={item.question}
                 incorrect={item.incorrect}
                 correct={item.correct}
+                isCorrectAnswer={isCorrectAnswer[index]}
             />
         )
     })
@@ -84,7 +92,9 @@ export default function QuizGame(){
             .then(data => setQuestionsData(data.results))
     }, [Url])
 
-
+    function checkButtonClick(){
+        console.log('CheckButtonClicked')
+    }
     console.log('Main component reloaded');
 
     return (
@@ -95,6 +105,10 @@ export default function QuizGame(){
                 handleClick={createCustomizedGame}
                 />}
             {(!onTitleScreen && quickGame) && questionsElement}
+            {(!onTitleScreen && quickGame) && <CheckButton handleClick={checkButtonClick} />}
         </div>
     )
 }
+
+//button is clicked
+//is the selection.value === correct? 
