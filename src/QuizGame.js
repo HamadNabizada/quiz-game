@@ -118,7 +118,37 @@ export default function QuizGame(){
         })
     }
     function handleSelectionClick(event){
-        console.log(event.target.id)
+        console.log(event.target.id);
+        console.log(event.target.dataset.questionId);
+        let targetId = event.target.id
+        let targetQuestion = event.target.dataset.questionId
+        setQuestionObjectArray(prevArray=>{
+            return prevArray.map(item=>{
+                let updatedAnswers = item.possibleAnswers.map(answer=>{
+                    if(answer.questionID === targetQuestion){
+                        if(answer.id === targetId){
+                            return{
+                                ...answer,
+                                isSelected:true,
+                                isClickable:true
+                            }
+                        }else{
+                            return {
+                                ...answer,
+                                isClickable:false,
+                                isSelected:false
+                            }
+                        }
+                    }else{
+                        return answer
+                    }
+                })
+                return {
+                    ...item,
+                    possibleAnswers: updatedAnswers
+                }
+            })
+        })
     }
 
 
