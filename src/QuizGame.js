@@ -8,7 +8,6 @@ export default function QuizGame(){
     let [onTitleScreen, setOnTitleScreen] = useState(true)
     let [quickGame, setQuickGame] = useState(false)
     let [questionsData, setQuestionsData] = useState([])
-    let isCorrectAnswer=[]
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
     let [UrlObject, setUrlObject] = useState({
         amount: '10',
@@ -21,6 +20,7 @@ export default function QuizGame(){
         key:'',
         question:'',
         type:'',
+        correct:'',
         possibleAnswers:[
             {
                 selection:'',
@@ -74,6 +74,7 @@ export default function QuizGame(){
         showGame()
     }
     useEffect(()=>{
+        console.log(Url);
         fetch(Url)
             .then(res => res.json())
             .then(data => setQuestionsData(data.results))
@@ -88,6 +89,7 @@ export default function QuizGame(){
                 question:replaceWithSymbol(item.question),
                 type:item.type,
                 possibleAnswers: possibleAnswers,
+                correct:replaceWithSymbol(item.correct_answer),
                 isCorrectAnswer: false
             }
         }))
@@ -96,6 +98,10 @@ export default function QuizGame(){
     function findPossibleAnswers(correct, incorrect, questionId){
         let allAnswers = [correct, ...incorrect]
         allAnswers.sort()
+        if(allAnswers[0] === 'False'){
+            allAnswers[0] = 'True'
+            allAnswers[1] = 'False'
+        }
         return allAnswers.map(item=>{
             let selectionId=nanoid()
             return {
@@ -131,6 +137,10 @@ export default function QuizGame(){
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
         return finalQuestion
     }
+
+    let questionsElement = questionObjectArray.map(item=>{
+        return <Questions {...item} />
+    })
     return (
         <div className='background quiz-wrapper'>
             {onTitleScreen && <TitleScreen 
@@ -140,42 +150,8 @@ export default function QuizGame(){
                 />}
             <button onClick={testButtton} >Log QuestonsData</button>
             <button onClick={testButtton2} >Log QuestonsobjArr</button>
-            {/* {(!onTitleScreen && quickGame) && questionsElement} */}
+            {(!onTitleScreen && quickGame) && questionsElement}
             {(!onTitleScreen && quickGame) && <CheckButton handleClick={checkButtonClick} />}
         </div>
     )
 }
-
-//button is clicked
-//is the selection.value === correct? 
-// let questionsElement = currentQuestionsArray.map( (item,index) =>{
-//     return (
-//         <Questions 
-//             key={item.id}
-//             id={item.id}
-//             type={item.type}
-//             question={item.question}
-//             incorrect={item.incorrect}
-//             correct={item.correct}
-//             isCorrectAnswer={isCorrectAnswer[index]}
-//         />
-//     )
-// })
-
-/*
-possibleAnswers=[{
-    selection:select,
-    key:
-    id:
-    name={item.name}
-    handleClick={handleClick} 
-    correct = {item.correct}  
-    isSelected={item.isSelected}
-    isClickable={item.isClickable}
-    questionID={item.id}
-}]
-
-
-
-
-*/

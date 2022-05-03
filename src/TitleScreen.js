@@ -66,11 +66,5 @@ export default function TitleScreen(props){
 
             </form>
         </div>
-
-
-        //chosee between quick quiz or apply settings
-            //quick quiz           
-            //quiz with settings
-            //code here
     )
 }
