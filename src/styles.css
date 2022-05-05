@@ -209,6 +209,30 @@ input::-webkit-inner-spin-button {
     align-items: center;
     gap: 1rem;
 }
+.playAgain{
+    display:flex;
+    gap: 1rem;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.3rem;
+}
+.playAgain>button{
+    font-family: 'Karla', 'sans-serif';
+    font-weight: 700;
+    min-width: 7rem;
+    max-width: 10rem;
+    min-height:3rem;
+    color:#ffffff;
+    padding: .1rem .5rem;
+    background-color: #0b239c;
+    border: .09rem solid #0b239c;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size:1.2rem;
+}
+.playAgain>button:active{
+    background-color: #102fca;
+}
 .message{
     font-size:1.2rem;
     color:#0b239c;

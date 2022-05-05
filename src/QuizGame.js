@@ -221,7 +221,9 @@ export default function QuizGame(){
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
         return finalQuestion
     }
-
+    function reloadQuiz(){
+        window.location.reload()
+    }
     let questionsElement = questionObjectArray.map(item=>{
         return <Questions isGameOngoing={isGameOngoing} {...item} />
     })
@@ -234,6 +236,7 @@ export default function QuizGame(){
                 />}
             {(!onTitleScreen && quickGame) && questionsElement}
             {(!onTitleScreen && quickGame) && <CheckButton 
+                reloadQuiz = {reloadQuiz}
                 allQuestions = {questionObjectArray}
                 isGameOngoing = {isGameOngoing}
                 handleClick={checkButtonClick} 

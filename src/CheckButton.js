@@ -2,10 +2,16 @@ import React from 'react'
 
 export default function CheckButton(props){
 
+    let playAgain = (
+    <div className='playAgain'>
+        <p className="message" >You guessed {} answers correctly</p>
+        <button onClick={props.reloadQuiz}>Play Again?</button>
+    </div>
+    )
     return (
         <div className="check-wrapper">
-            {!props.isGameOngoing && <p className="message" >You guessed {} answers correctly</p>}
-            <button onClick={props.handleClick} className="checkBtn" >Check Answers</button>
+            {!props.isGameOngoing && playAgain}
+            {props.isGameOngoing && <button onClick={props.handleClick} className="checkBtn" >Check Answers</button>}
         </div>
     )
 }
