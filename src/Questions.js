@@ -4,7 +4,7 @@ import Selection from './Selection'
 
 export default function Questions(props){
     let selectionElement = props.possibleAnswers.map(item =>{
-        return <Selection {...item} />
+        return <Selection isGameOngoing={props.isGameOngoing} {...item} />
     })
     return(
         <div className="questions-wrapper">

@@ -112,7 +112,7 @@ html{
     background-color: #D6DBF5;
     color:#293264;
     border-color: #D6DBF5;
-    border: 1px solid blue;
+    border: 2px solid blue;
 }
 .userSelected:hover{
     background-color: #D6DBF5;
@@ -213,4 +213,15 @@ input::-webkit-inner-spin-button {
     font-size:1.2rem;
     color:#0b239c;
     font-family: 'Karla';
+}
+.isWrong{
+    background-color: rgb(221, 98, 98);
+    color:pink;
+}
+.isCorrect{
+    background-color:rgb(90, 216, 90);
+}
+.gameOver{
+    pointer-events: none;
+    cursor:default;
 }

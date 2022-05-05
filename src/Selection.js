@@ -2,7 +2,12 @@ import React, {useState} from 'react'
 
 
 export default function Selection(props){
-    let myClassName=`selection ${props.isClickable ? '':'currentSelection'} ${props.isSelected ? 'userSelected': ''}`
+    let myClassName=`selection 
+    ${props.isClickable ? '':'currentSelection'} 
+    ${props.isSelected ? 'userSelected': ''}
+    ${props.isWrong ? 'isWrong': ''}
+    ${props.isCorrect ? 'isCorrect': ''}
+    ${props.isGameOngoing ? '': 'gameOver'}`
     return(
         <button 
         id={props.id}

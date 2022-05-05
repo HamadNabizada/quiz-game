@@ -7,6 +7,7 @@ import CheckButton from './CheckButton'
 export default function QuizGame(){
     let [onTitleScreen, setOnTitleScreen] = useState(true)
     let [quickGame, setQuickGame] = useState(false)
+    let [isGameOngoing, setIsGameOngoing] = useState(false)
     let [questionsData, setQuestionsData] = useState([])
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
     let [UrlObject, setUrlObject] = useState({
@@ -39,6 +40,7 @@ export default function QuizGame(){
     function showGame(){
         setOnTitleScreen(prevOnTitleScreen => !prevOnTitleScreen)
         setQuickGame(true)
+        setIsGameOngoing(true)
     }
     function handleChange(event){
         setUrlObject(prevUrlObject =>{
@@ -113,6 +115,7 @@ export default function QuizGame(){
                 isSelected:false,
                 isClickable:true,
                 isWrong:false,
+                isCorrect:false,
                 questionID:questionId
             }
         })
@@ -151,17 +154,68 @@ export default function QuizGame(){
         })
     }
 
+    function checkAllAnswers(){
+        setQuestionObjectArray( prevArray =>{
+            return prevArray.map(item =>{
+                let answersArray = item.possibleAnswers
+                let chosenAnswer
+                let updatedAnswers
+                answersArray.forEach(answer =>{
+                    if(answer.isSelected===true){
+                        chosenAnswer=answer.selection
+                    }
+                })
+                updatedAnswers = answersArray.map(answer=>{
+                    if(answer.selection === answer.correct){
+                        return {
+                            ...answer,
+                            isCorrect:true
+                        }
+                    }else{
+                        if(chosenAnswer === answer.selection){
+                            return {
+                                ...answer,
+                                isWrong:true
+                            }
+                        }else{
+                            return answer
+                        }
+                    }
+                })
+                if(chosenAnswer === item.correct){
+                    console.log('Right');
+                    return {
+                        ...item,
+                        possibleAnswers: updatedAnswers,
+                        isCorrectAnswer:true
+                    }
+                }else{
+                    console.log('wrong');
+                    return {
+                        ...item,
+                        possibleAnswers: updatedAnswers
+                    }
+                }
+                
+            })
+        })
+    }
+    function countAllCorrect(){
 
+    }
     function checkButtonClick(){
-        console.log('CheckButtonClicked')    
+        setIsGameOngoing(false)
+        checkAllAnswers()
+        countAllCorrect()
+        console.log(questionObjectArray);
+
+        //iterate through all questionsObject. 
+            //how many isCorrect answer?
+
+
     }
     console.log('Main component reloaded');
-    function testButtton(){
-        console.log(questionsData);
-    }
-    function testButtton2(){
-        console.log(questionObjectArray);
-    }
+
     function replaceWithSymbol(question){
         let finalQuestion = question.replaceAll('&quot;', '"')
         finalQuestion = finalQuestion.replaceAll('&#039;', "'")
@@ -169,7 +223,7 @@ export default function QuizGame(){
     }
 
     let questionsElement = questionObjectArray.map(item=>{
-        return <Questions {...item} />
+        return <Questions isGameOngoing={isGameOngoing} {...item} />
     })
     return (
         <div className='background quiz-wrapper'>
@@ -178,10 +232,12 @@ export default function QuizGame(){
                 quickGame={playQuickGame}
                 handleClick={createCustomizedGame}
                 />}
-            <button onClick={testButtton} >Log QuestonsData</button>
-            <button onClick={testButtton2} >Log QuestonsobjArr</button>
             {(!onTitleScreen && quickGame) && questionsElement}
-            {(!onTitleScreen && quickGame) && <CheckButton handleClick={checkButtonClick} />}
+            {(!onTitleScreen && quickGame) && <CheckButton 
+                allQuestions = {questionObjectArray}
+                isGameOngoing = {isGameOngoing}
+                handleClick={checkButtonClick} 
+                />}
         </div>
     )
 }
