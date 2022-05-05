@@ -9,6 +9,7 @@ export default function QuizGame(){
     let [quickGame, setQuickGame] = useState(false)
     let [isGameOngoing, setIsGameOngoing] = useState(false)
     let [questionsData, setQuestionsData] = useState([])
+    let [amountCorrect, setAmountCorrect] = useState(0)
     let [Url, setUrl] = useState(`https://opentdb.com/api.php?amount=10`)
     let [UrlObject, setUrlObject] = useState({
         amount: '10',
@@ -76,7 +77,6 @@ export default function QuizGame(){
         showGame()
     }
     useEffect(()=>{
-        console.log(Url);
         fetch(Url)
             .then(res => res.json())
             .then(data => setQuestionsData(data.results))
@@ -121,8 +121,6 @@ export default function QuizGame(){
         })
     }
     function handleSelectionClick(event){
-        console.log(event.target.id);
-        console.log(event.target.dataset.questionId);
         let targetId = event.target.id
         let targetQuestion = event.target.dataset.questionId
         setQuestionObjectArray(prevArray=>{
@@ -183,14 +181,12 @@ export default function QuizGame(){
                     }
                 })
                 if(chosenAnswer === item.correct){
-                    console.log('Right');
                     return {
                         ...item,
                         possibleAnswers: updatedAnswers,
                         isCorrectAnswer:true
                     }
                 }else{
-                    console.log('wrong');
                     return {
                         ...item,
                         possibleAnswers: updatedAnswers
@@ -200,21 +196,10 @@ export default function QuizGame(){
             })
         })
     }
-    function countAllCorrect(){
-
-    }
     function checkButtonClick(){
         setIsGameOngoing(false)
         checkAllAnswers()
-        countAllCorrect()
-        console.log(questionObjectArray);
-
-        //iterate through all questionsObject. 
-            //how many isCorrect answer?
-
-
     }
-    console.log('Main component reloaded');
 
     function replaceWithSymbol(question){
         let finalQuestion = question.replaceAll('&quot;', '"')
@@ -227,6 +212,18 @@ export default function QuizGame(){
     let questionsElement = questionObjectArray.map(item=>{
         return <Questions isGameOngoing={isGameOngoing} {...item} />
     })
+    useEffect(()=>{
+        setAmountCorrect(prevCorrect=>{
+            let counter=0
+            for (let i = 0; i < questionObjectArray.length; i++) {
+                const question = questionObjectArray[i];
+                if(question.isCorrectAnswer === true){
+                    counter=counter +1
+                }
+            }
+            return counter
+        })
+    },[questionObjectArray])
     return (
         <div className='background quiz-wrapper'>
             {onTitleScreen && <TitleScreen 
@@ -236,6 +233,8 @@ export default function QuizGame(){
                 />}
             {(!onTitleScreen && quickGame) && questionsElement}
             {(!onTitleScreen && quickGame) && <CheckButton 
+                amountCorrect = {amountCorrect}
+                questionArray = {questionObjectArray}
                 reloadQuiz = {reloadQuiz}
                 allQuestions = {questionObjectArray}
                 isGameOngoing = {isGameOngoing}

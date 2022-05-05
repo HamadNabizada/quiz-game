@@ -4,7 +4,7 @@ export default function CheckButton(props){
 
     let playAgain = (
     <div className='playAgain'>
-        <p className="message" >You guessed {} answers correctly</p>
+        <p className="message" >You guessed {props.amountCorrect}/{props.questionArray.length} answers correctly</p>
         <button onClick={props.reloadQuiz}>Play Again?</button>
     </div>
     )
